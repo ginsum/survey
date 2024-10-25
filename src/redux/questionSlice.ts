@@ -7,6 +7,8 @@ import {
 } from "@/type";
 import { getId } from "@/lib/id";
 
+const textType = ["singleLineText", "multiLineText"];
+
 export interface QuestionState {
   list: QuestionType[];
 }
@@ -106,6 +108,35 @@ export const questionSlice = createSlice({
       });
       state.list = updateQuestions;
     },
+    changeQuestionType: (
+      state,
+      action: PayloadAction<{ id: string; type: string }>
+    ) => {
+      const sliceQuestions = [...state.list];
+      const updateQuestions = sliceQuestions.map((el) => {
+        if (action.payload.id === el.id) {
+          if (textType.includes(action.payload.type)) {
+            return {
+              ...el,
+              type: action.payload.type,
+              question: "",
+              required: false,
+            };
+          } else {
+            return {
+              ...el,
+              type: action.payload.type,
+              question: "",
+              options: [""],
+              required: false,
+            };
+          }
+        }
+        return el;
+      });
+
+      state.list = updateQuestions;
+    },
   },
 });
 
@@ -118,6 +149,7 @@ export const {
   copyQuestion,
   removeQuestion,
   changeRequired,
+  changeQuestionType,
 } = questionSlice.actions;
 
 export default questionSlice.reducer;

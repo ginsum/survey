@@ -1,50 +1,85 @@
-import { useState } from "react";
+import { useDispatch } from "react-redux";
 
-import Card from "../Card";
+import {
+  addOptionText,
+  changeOptionText,
+  changeQuestionText,
+  removeOptionText,
+} from "@/redux/questionSlice";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import Card from "../Card";
+import { Checkbox } from "../ui/checkbox";
+import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 
-export default function MultipleChoiceField() {
-  const [options, setOptions] = useState([""]);
+interface MultipleChoiceType {
+  id: string;
+  question: string;
+  options?: string[];
+  type: string;
+}
 
-  const handleOptionChange = (text: string, index: number) => {
-    const updateOptions = [...options];
-    updateOptions[index] = text;
-    setOptions(updateOptions);
-  };
-  const addOption = () => {
-    setOptions([...options, ""]);
-  };
-  const removeOption = (optionIndex: number) => {
-    const filterOptions = options.filter(
-      (_text, index) => index !== optionIndex
-    );
-    setOptions(filterOptions);
-    // TODO: 하나만 남았을때 처리
-  };
+export default function MultipleChoiceField({
+  id,
+  question,
+  options = [],
+  type,
+}: MultipleChoiceType) {
+  const dispatch = useDispatch();
 
   return (
     <Card className="w-full">
-      <Input type="text" placeholder="질문을 입력해주세요" />
-      <div className="w-full flex flex-col items-center gap-2 mt-4">
+      <Input
+        type="text"
+        placeholder="질문을 입력해주세요"
+        value={question}
+        onChange={(e) =>
+          dispatch(changeQuestionText({ id, text: e.target.value }))
+        }
+      />
+      <div className="w-full flex flex-col items-center gap-2 mt-4 pl-3">
         {options.map((text, index) => (
-          <div key={`${index}-${text}`} className="flex w-full justify-between">
-            <Input
-              type="text"
-              placeholder="옵션을 입력해주세요"
-              value={text}
-              onChange={(e) => handleOptionChange(e.target.value, index)}
-            />
-            <Button variant="ghost" onClick={() => removeOption(index)}>
-              삭제
-            </Button>
+          <div key={`${id}-${index}`} className="flex w-full justify-between">
+            <div className="flex w-full items-center gap-1">
+              {type === "checkbox" && <Checkbox disabled />}
+              {type === "multipleChoice" && (
+                <RadioGroup>
+                  <RadioGroupItem value="" disabled />
+                </RadioGroup>
+              )}
+              <Input
+                type="text"
+                placeholder="옵션을 입력해주세요"
+                value={text}
+                onChange={(e) =>
+                  dispatch(
+                    changeOptionText({
+                      id,
+                      text: e.target.value,
+                      optionIndex: index,
+                    })
+                  )
+                }
+              />
+            </div>
+
+            {options.length > 1 && (
+              <Button
+                variant="ghost"
+                onClick={() =>
+                  dispatch(removeOptionText({ id, optionIndex: index }))
+                }
+              >
+                X
+              </Button>
+            )}
           </div>
         ))}
 
         <Button
-          className="w-[160px] mt-2"
+          className="w-[130px] mt-2"
           variant="outline"
-          onClick={addOption}
+          onClick={() => dispatch(addOptionText({ id }))}
         >
           옵션 추가
         </Button>

@@ -9,27 +9,69 @@ import {
 } from "./ui/select";
 import { Switch } from "@/components/ui/switch";
 import { answerType } from "@/constants";
+import { useDispatch } from "react-redux";
+import {
+  changeQuestionType,
+  changeRequired,
+  copyQuestion,
+  removeQuestion,
+} from "@/redux/questionSlice";
 
-export default function SideInfo() {
+interface SlideInfoType {
+  id: string;
+  type: string;
+  required: boolean;
+  questionIndex: number;
+}
+
+export default function SideInfo({
+  id,
+  type,
+  required,
+  questionIndex,
+}: SlideInfoType) {
+  const dispatch = useDispatch();
+
+  const findAnswer = answerType.find(({ id: answerId }) => answerId === type);
+
   return (
-    <Card className="w-[240px]">
-      <Select>
-        <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder="Theme" />
-        </SelectTrigger>
-        <SelectContent>
-          {answerType.map(({ id, label }) => (
-            <SelectItem key={id} value={id}>
-              {label}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
-      <div className="flex gap-1">
-        <Button variant="outline">복제</Button>
-        <Button variant="outline">삭제</Button>
-        <div className="flex flex-col justify-center items-center gap-0.5">
-          <Switch />
+    <Card className="w-[200px]">
+      <div className="flex flex-col gap-3">
+        <Select
+          onValueChange={(value) =>
+            dispatch(changeQuestionType({ id, type: value }))
+          }
+        >
+          <SelectTrigger className="w-[120px]">
+            <SelectValue placeholder={findAnswer?.label || ""} />
+          </SelectTrigger>
+          <SelectContent>
+            {answerType.map(({ id, label }) => (
+              <SelectItem key={id} value={id}>
+                {label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        <div className="flex gap-1">
+          <Button
+            variant="outline"
+            onClick={() => dispatch(copyQuestion({ questionIndex }))}
+          >
+            복제
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() => dispatch(removeQuestion({ id }))}
+          >
+            삭제
+          </Button>
+        </div>
+        <div className="flex items-center gap-1">
+          <Switch
+            checked={required}
+            onCheckedChange={() => dispatch(changeRequired({ id }))}
+          />
           <div className="text-xs">필수</div>
         </div>
       </div>
