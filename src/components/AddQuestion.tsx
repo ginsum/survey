@@ -18,19 +18,20 @@ export default function AddQuestion() {
   const dispatch = useDispatch();
 
   const getNewQuestion = (type: string) => {
+    const questionId = getId();
     if (textType.includes(type)) {
       return {
-        id: getId(),
+        id: questionId,
         type,
         question: "",
         required: false,
       };
     } else {
       return {
-        id: getId(),
+        id: questionId,
         type,
         question: "",
-        options: [""],
+        options: [{ id: `${questionId}-${getId()}`, text: "" }],
         required: false,
       };
     }

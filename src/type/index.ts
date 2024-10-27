@@ -1,11 +1,14 @@
+export interface OptionType {
+  id: string;
+  text: string;
+}
+
 export interface QuestionType {
   id: string;
   type: string;
   question: string;
-  options?: string[];
+  options?: OptionType[];
   required: boolean;
-  textAnswer?: string;
-  optionAnswer?: string;
 }
 
 export interface ChangeQuestionTextType {
@@ -15,6 +18,6 @@ export interface ChangeQuestionTextType {
 
 export interface ChangeOptionTextType {
   id: string;
-  optionIndex: number;
+  optionId: string;
   text: string;
 }

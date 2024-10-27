@@ -43,7 +43,13 @@ export const questionSlice = createSlice({
         if (action.payload.id === el.id) {
           if (el.options) {
             const updateOptions = [...el.options];
-            updateOptions[action.payload.optionIndex] = action.payload.text;
+            const findOptionIndex = updateOptions.findIndex(
+              ({ id }) => id === action.payload.optionId
+            );
+            updateOptions[findOptionIndex] = {
+              ...updateOptions[findOptionIndex],
+              text: action.payload.text,
+            };
             return { ...el, options: updateOptions };
           }
         }
@@ -56,7 +62,13 @@ export const questionSlice = createSlice({
       const updateQuestions = sliceQuestions.map((el) => {
         if (action.payload.id === el.id) {
           if (el.options) {
-            return { ...el, options: [...el.options, ""] };
+            return {
+              ...el,
+              options: [
+                ...el.options,
+                { id: `${action.payload.id}-${getId()}`, text: "" },
+              ],
+            };
           }
         }
         return el;
@@ -65,14 +77,14 @@ export const questionSlice = createSlice({
     },
     removeOptionText: (
       state,
-      action: PayloadAction<{ id: string; optionIndex: number }>
+      action: PayloadAction<{ id: string; optionId: string }>
     ) => {
       const sliceQuestions = [...state.list];
       const updateQuestions = sliceQuestions.map((el) => {
         if (action.payload.id === el.id) {
           if (el.options) {
             const updateOptions = el.options.filter(
-              (_text, index) => index !== action.payload.optionIndex
+              ({ id }) => id !== action.payload.optionId
             );
 
             return { ...el, options: updateOptions };
@@ -127,7 +139,7 @@ export const questionSlice = createSlice({
               ...el,
               type: action.payload.type,
               question: "",
-              options: [""],
+              options: [{ id: `${action.payload.id}-${getId()}`, text: "" }],
               required: false,
             };
           }
@@ -135,6 +147,30 @@ export const questionSlice = createSlice({
         return el;
       });
 
+      state.list = updateQuestions;
+    },
+    moveOption: (
+      state,
+      action: PayloadAction<{ id: string; fromId: string; toId: string }>
+    ) => {
+      const sliceQuestions = [...state.list];
+      const updateQuestions = sliceQuestions.map((el) => {
+        if (action.payload.id === el.id) {
+          if (el.options) {
+            const updatedOptions = [...el.options];
+            const findFromIndex = updatedOptions.findIndex(
+              ({ id }) => id === action.payload.fromId
+            );
+            const findToIndex = updatedOptions.findIndex(
+              ({ id }) => id === action.payload.toId
+            );
+            const [movedOption] = updatedOptions.splice(findFromIndex, 1);
+            updatedOptions.splice(findToIndex, 0, movedOption);
+            return { ...el, options: updatedOptions };
+          }
+        }
+        return el;
+      });
       state.list = updateQuestions;
     },
   },
@@ -150,6 +186,7 @@ export const {
   removeQuestion,
   changeRequired,
   changeQuestionType,
+  moveOption,
 } = questionSlice.actions;
 
 export default questionSlice.reducer;
