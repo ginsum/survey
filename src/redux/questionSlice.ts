@@ -173,6 +173,22 @@ export const questionSlice = createSlice({
       });
       state.list = updateQuestions;
     },
+    moveQuestion: (
+      state,
+      action: PayloadAction<{ id: string; fromId: string; toId: string }>
+    ) => {
+      const sliceQuestions = [...state.list];
+      const findFromIndex = sliceQuestions.findIndex(
+        ({ id }) => id === action.payload.fromId
+      );
+      const findToIndex = sliceQuestions.findIndex(
+        ({ id }) => id === action.payload.toId
+      );
+      const [movedQuestion] = sliceQuestions.splice(findFromIndex, 1);
+      sliceQuestions.splice(findToIndex, 0, movedQuestion);
+
+      state.list = sliceQuestions;
+    },
   },
 });
 
@@ -187,6 +203,7 @@ export const {
   changeRequired,
   changeQuestionType,
   moveOption,
+  moveQuestion,
 } = questionSlice.actions;
 
 export default questionSlice.reducer;

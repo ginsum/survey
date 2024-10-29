@@ -9,6 +9,8 @@ import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
 import { Input } from "../ui/input";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
+import dragHandle from "../../assets/drag-handle.svg";
+import deleteIcon from "../../assets/x-icon.png";
 
 export default function DndOption({
   id,
@@ -51,7 +53,9 @@ export default function DndOption({
     <div ref={preview} className="flex w-full justify-between">
       <div className="flex w-full items-center gap-1">
         <div ref={drop}>
-          <div ref={drag} className="w-4 h-6 bg-slate-200"></div>
+          <div ref={drag} className="flex items-center w-4 h-8 bg-stone-100">
+            <img src={dragHandle} className="w-4" />
+          </div>
         </div>
         {type === "checkbox" && <Checkbox disabled />}
         {type === "multipleChoice" && (
@@ -63,6 +67,7 @@ export default function DndOption({
           type="text"
           placeholder="옵션을 입력해주세요"
           value={text}
+          className="text-sm h-9"
           onChange={(e) =>
             dispatch(
               changeOptionText({
@@ -76,10 +81,11 @@ export default function DndOption({
       </div>
       {hasDelete && (
         <Button
+          className="w-6 p-0"
           variant="ghost"
           onClick={() => dispatch(removeOptionText({ id, optionId }))}
         >
-          X
+          <img src={deleteIcon} className="w-4" />
         </Button>
       )}
     </div>
