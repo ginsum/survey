@@ -2,8 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { OptionTextType, ChangeQuestionTextType, QuestionType } from "@/type";
 import { getId } from "@/lib/id";
-
-const textType = ["singleLineText", "multiLineText"];
+import { textType } from "@/constants";
 
 export interface QuestionState {
   list: QuestionType[];
@@ -92,12 +91,24 @@ export const questionSlice = createSlice({
     },
     copyQuestion: (state, action: PayloadAction<{ questionIndex: number }>) => {
       const sliceQuestions = [...state.list];
-      const sliceQuestion = {
-        ...sliceQuestions[action.payload.questionIndex],
-        id: getId(),
-      };
+      const findQuestion = sliceQuestions[action.payload.questionIndex];
+      let updateQuestion;
+      if (textType.includes(findQuestion.type)) {
+        updateQuestion = { ...findQuestion, id: getId() };
+      } else {
+        const newId = getId();
+        const newOption = findQuestion.options?.map((el) => {
+          return { ...el, id: `${newId}-${getId()}` };
+        });
 
-      sliceQuestions.splice(action.payload.questionIndex + 1, 0, sliceQuestion);
+        updateQuestion = { ...findQuestion, id: newId, options: newOption };
+      }
+
+      sliceQuestions.splice(
+        action.payload.questionIndex + 1,
+        0,
+        updateQuestion
+      );
       state.list = sliceQuestions;
     },
     removeQuestion: (state, action: PayloadAction<{ id: string }>) => {

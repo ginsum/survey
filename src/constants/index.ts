@@ -20,3 +20,5 @@ export const answerType = [
     label: "드롭다운",
   },
 ];
+
+export const textType = ["singleLineText", "multiLineText"];
