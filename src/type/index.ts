@@ -16,7 +16,7 @@ export interface ChangeQuestionTextType {
   text: string;
 }
 
-export interface ChangeOptionTextType {
+export interface OptionTextType {
   id: string;
   optionId: string;
   text: string;

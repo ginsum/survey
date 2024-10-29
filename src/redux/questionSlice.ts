@@ -1,10 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import {
-  ChangeOptionTextType,
-  ChangeQuestionTextType,
-  QuestionType,
-} from "@/type";
+import { OptionTextType, ChangeQuestionTextType, QuestionType } from "@/type";
 import { getId } from "@/lib/id";
 
 const textType = ["singleLineText", "multiLineText"];
@@ -37,7 +33,7 @@ export const questionSlice = createSlice({
       });
       state.list = updateQuestions;
     },
-    changeOptionText: (state, action: PayloadAction<ChangeOptionTextType>) => {
+    changeOptionText: (state, action: PayloadAction<OptionTextType>) => {
       const sliceQuestions = [...state.list];
       const updateQuestions = sliceQuestions.map((el) => {
         if (action.payload.id === el.id) {
