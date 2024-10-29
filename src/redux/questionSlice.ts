@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { OptionTextType, ChangeQuestionTextType, QuestionType } from "@/type";
 import { getId } from "@/lib/id";
-import { textType } from "@/constants";
+import { textType } from "@/lib/contants";
 
 export interface QuestionState {
   list: QuestionType[];

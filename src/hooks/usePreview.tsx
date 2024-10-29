@@ -15,6 +15,7 @@ export default function usePreview() {
       answerOptionId: string[];
     }[]
   >([]);
+
   useEffect(() => {
     if (list.length) {
       const answerList = list.map(({ id, question, required, type }) => {

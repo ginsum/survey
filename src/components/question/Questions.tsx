@@ -1,11 +1,11 @@
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
-import SideInfo from "../SideInfo";
-import MultipleChoiceField from "./MultipleChoice";
-import TextField from "./Text";
-import AddQuestion from "../AddQuestion";
-import Card from "../Card";
-import { textType } from "@/constants";
+import SideInfo from "./SideInfo";
+import MultipleChoiceField from "../field/MultipleChoice";
+import TextField from "../field/Text";
+import AddQuestion from "./AddQuestion";
+import Card from "../ui/custom/Card";
+import { textType } from "@/lib/contants";
 
 export default function Questions() {
   const { list } = useSelector((state: RootState) => state.questions);

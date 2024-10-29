@@ -1,10 +1,10 @@
 import { useState } from "react";
 
-import Questions from "./components/field/Questions";
+import Questions from "./components/question/Questions";
 import TitleField from "./components/field/Title";
 import Preview from "./components/preview/Preview";
 import { Button } from "./components/ui/button";
-import SideMenu from "./components/sideMenu/SideMenu";
+import SideMenu from "./components/question/QuestionList";
 
 function App() {
   const [open, setOpen] = useState<boolean>(false);

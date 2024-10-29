@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import Card from "../Card";
+import Card from "../ui/custom/Card";
 import { Input } from "@/components/ui/input";
 import { changeTitle, changeDesc } from "@/redux/titleSlice";
 import { RootState } from "@/redux/store";

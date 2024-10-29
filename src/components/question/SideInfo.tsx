@@ -1,14 +1,14 @@
-import Card from "./Card";
-import { Button } from "./ui/button";
+import Card from "../ui/custom/Card";
+import { Button } from "../ui/button";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "./ui/select";
+} from "../ui/select";
 import { Switch } from "@/components/ui/switch";
-import { answerType } from "@/constants";
+import { answerType } from "@/lib/contants";
 import { useDispatch } from "react-redux";
 import {
   changeQuestionType,

@@ -1,9 +1,9 @@
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 
-import usePreview from "@/hook/usePreview";
+import usePreview from "@/hooks/usePreview";
 import { findOptionId } from "@/lib/options";
-import Card from "../Card";
+import Card from "../ui/custom/Card";
 import { Input } from "../ui/input";
 import { Checkbox } from "../ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";

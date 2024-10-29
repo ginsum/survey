@@ -6,11 +6,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { answerType, textType } from "@/constants";
+import { answerType, textType } from "@/lib/contants";
 import { getId } from "@/lib/id";
 import { addQuestion } from "@/redux/questionSlice";
 import { useDispatch } from "react-redux";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 
 export default function AddQuestion() {
   const dispatch = useDispatch();

@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { OptionType } from "@/type";
 import DndOptionList from "../dnd/DndOptionList";
-import Card from "../Card";
+import Card from "../ui/custom/Card";
 
 interface MultipleChoiceType {
   id: string;

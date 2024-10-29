@@ -1,4 +1,4 @@
-import { answerType } from "@/constants";
+import { answerType } from "@/lib/contants";
 import { moveQuestion } from "@/redux/questionSlice";
 import { useDrag, useDrop } from "react-dnd";
 import { useDispatch } from "react-redux";
