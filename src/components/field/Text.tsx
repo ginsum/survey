@@ -12,7 +12,7 @@ export default function TextField({ id, question }: TextFieldType) {
   const dispatch = useDispatch();
 
   return (
-    <Card className="w-full">
+    <div className="w-full px-2">
       <Input
         type="text"
         placeholder="질문을 입력해주세요"
@@ -21,6 +21,6 @@ export default function TextField({ id, question }: TextFieldType) {
           dispatch(changeQuestionText({ id, text: e.target.value }))
         }
       />
-    </Card>
+    </div>
   );
 }

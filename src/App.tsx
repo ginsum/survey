@@ -11,15 +11,17 @@ function App() {
   return (
     <div className="relative w-screen h-full flex justify-center">
       {!open ? (
-        <div className="flex w-full h-full max-w-[840px] flex-col p-6 gap-4">
-          <SideMenu />
+        <div className="w-full h-full max-w-[780px] p-6 gap-4">
           <div className="w-full flex justify-end">
             <Button variant={"ghost"} onClick={() => setOpen(true)}>
               미리보기
             </Button>
           </div>
-          <TitleField />
-          <Questions />
+          <div className="flex w-full 2xl:h-full h-screen flex-col p-6 gap-4 overflow-auto">
+            <TitleField />
+            <Questions />
+          </div>
+          <SideMenu />
         </div>
       ) : (
         <div className="flex w-full h-full max-w-[840px] flex-col  p-6 gap-4">

@@ -35,7 +35,7 @@ export default function SideInfo({
   const findAnswer = answerType.find(({ id: answerId }) => answerId === type);
 
   return (
-    <Card className="w-[200px]">
+    <div className="w-[160px] py-2 pl-4">
       <div className="flex flex-col gap-3">
         <Select
           onValueChange={(value) =>
@@ -75,6 +75,6 @@ export default function SideInfo({
           <div className="text-xs">필수</div>
         </div>
       </div>
-    </Card>
+    </div>
   );
 }

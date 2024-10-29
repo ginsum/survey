@@ -23,7 +23,7 @@ export default function MultipleChoiceField({
   const dispatch = useDispatch();
 
   return (
-    <Card className="w-full">
+    <div className="w-full flex flex-col items-center px-2 pr-3">
       <Input
         type="text"
         placeholder="질문을 입력해주세요"
@@ -40,6 +40,6 @@ export default function MultipleChoiceField({
       >
         옵션 추가
       </Button>
-    </Card>
+    </div>
   );
 }
