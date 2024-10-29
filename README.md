@@ -1,50 +1,79 @@
-# React + TypeScript + Vite
+# Google Form
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+이 프로젝트는 설문지를 작성하고 미리볼 수 있는 웹 페이지입니다. <br/>
+사용자는 질문을 타입별로 추가할 수 있고, 작성된 설문지의 미리보기할 수 있습니다.
 
-Currently, two official plugins are available:
+## 주요 기능
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 설문의 제목과 설명을 작성할 수 있음.
+- 설문지 질문 추가: 타입별(단문형, 장문형, 객관식, 체크박스, 드롭다운)을 선택하여 설문지를 구성할 수 있음.
+- 질문 기능 :
+  - 질문 텍스트 작성 가능.
+  - 질문의 타입을 변경할 수 있음.
+  - 질문을 복제, 삭제 할 수 있음.
+  - 질문을 답변 필수 항목으로 지정할 수 있음.
+  - 질문의 순서를 Drag & Drop으로 변경할 수 있음.
+  - 객관식, 체크박스, 드롭다운의 경우 옵션을 추가, 수정, 삭제할 수 있음.
+  - 객관식, 체크박스, 드롭다운의 경우 Drag & Drop으로 옵션 순서를 변경할 있음.
+- 미리보기 기능
+  - 작성한 질문의 결과물을 미리볼 수 있음.
+  - 질문의 답변을 해볼 수 있음.
+  - 제출하기를 눌러 답변이 작성된 내용을 볼 수 있음.
+  - 양식 지우기로 작성된 답변을 일괄적으로 초기화 할 수 있음.
 
-## Expanding the ESLint configuration
+## 기술 스택
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- react
+- typeScript.
+- redux-Toolkit: 전역 상태 관리를 위해 사용.
+- tailwindCSS : 스타일링을 위해 사용. 미리 세팅된 유틸리티 클래스를 활용하여 HTML 코드 내에서 스타일링 가능하다.
+- shadCN: UI 컴포넌트 스타일링 및 재사용성을 위해 사용. Redix UI와 Tailwind CSS를 기반으로 하는 component collection. 프로젝트 의존성에 추가하지 않고 필요한 컴포넌트만 가져다 쓸 수 있다.
+- react-dnd: 질문 순서 변경을 위한 Drag & Drop 기능 구현에 사용.
 
-- Configure the top-level `parserOptions` property like this:
+## 폴더 구조
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```
+src/
+├── components/
+  ├── dnd/       # Drag & Drop 관련 컴포넌트
+  ├── field/     # 질문을 작성하는데 필요한 field 컴포넌트
+  ├── preview/   # 미리보기 관련 컴포넌트
+  ├── question/  # 질문 관련 컴포넌트
+  └── ui/        # 재사용 가능한 UI 컴포넌트
+├── hooks/       # 커스텀 hooks
+├── lib/         # 유틸리티 함수 및 상수
+├── redux/       # 전역 상태 관리
+└── type/        # 타입 관리
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## 추가 구현 사항
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+- 미리보기에서 양식 지우기 구현 : 양식 지우기를 누를 경우 작성한 답변이 모두 초기화됩니다.
+- 기존 구글폼에서 변경된 UI
+  - 질문 추가 : 기존 구글폼에서 질문을 추가할 경우 필요한 타입을 미리 선택할 수 없는 점이 불편하여 질문 추가 버튼을 눌렀을때 타입을 미리 설정할 수 있는 기능을 구현하였습니다.
+  - 질문 영역 구성 : 질문을 구성하는 요소 중 질문 텍스트와 옵션 텍스트 영역을 하나로 볼 수 있도록 하고 그 외 부가적인 설정이라 생각되는 타입, 복제, 삭제, 필수 버튼을 한데 묶어 배치하여 보기 편하도록 구성하였습니다.
+  - 질문 순서 바꾸기 : 기본 구글폼에서 질문 순서를 바꿀시 Drag & Drop을 사용하는데 질문 영역 전체를 움직여야 해서 드래그앤 드랍을 사용하는데 불편함을 느껴 질문 리스트를 사이드 영역으로 배치하고 그곳에서 순서를 변경할 수 있도록 배치하였습니다.
+- 미리보기에서 제출하기 누를시 제출미리보기 모달 구현 : 설문을 제출하기 전 답변한 사항을 한번더 확인할 수 있도록 제출미리보기를 추가하였습니다.
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+## 설치 및 시작
+
+1.  설치
+
 ```
+npm install
+또는
+yarn install
+```
+
+2.  개발서버 실행
+
+```
+npm run dev
+또는
+yarn dev
+```
+
+3. 브라우저 접속
+   http://localhost:5173/
+
+\*\* 이 프로젝트는 PC 화면에 최적화 되어 있습니다.
