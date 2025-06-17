@@ -3,7 +3,7 @@
 이 프로젝트는 설문지를 작성하고 미리볼 수 있는 웹 페이지입니다. <br/>
 사용자는 질문을 타입별로 추가할 수 있고, 작성된 설문지의 미리보기할 수 있습니다.
 
-## [🚀 배포 주소 바로가기](https://survey-delta-silk.vercel.app)
+[🚀 배포 주소 바로가기](https://survey-delta-silk.vercel.app)
 
 ## 주요 기능
 
